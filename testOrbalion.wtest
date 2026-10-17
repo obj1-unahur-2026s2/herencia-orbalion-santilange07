@@ -1,0 +1,14 @@
+import orbalion.*
+describe "test"{
+    const entrenador1 = new Entrenador(cantiadadDeCiclosSolaresDeExperiencia = 1,estaEnSintonia = true,
+        nivelDePrecisionEstrategica = 10 , rol = "estrategaCuantico")
+    const equipoLuminico = new Luminico(nombre = "e", nivelDeEnergiaBase = 10, entrenador = entrenador1,
+        nivelDeRadiacionCapturada = 5001 )
+    const equipoLuminico2 = new Luminico(nombre = "e", nivelDeEnergiaBase = 10, entrenador = entrenador1,
+        nivelDeRadiacionCapturada = 4000 )
+    test "checkpoin 1"{
+        assert.throwsException({entrenador1.asignarRol("x")})
+        assert.equals(10, equipoLuminico.energiaTotal())
+        assert.equals(11, equipoLuminico2.energiaTotal())
+    }
+}
