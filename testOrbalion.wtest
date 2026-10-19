@@ -1,14 +1,79 @@
 import orbalion.*
 describe "test"{
-    const entrenador1 = new Entrenador(cantiadadDeCiclosSolaresDeExperiencia = 1,estaEnSintonia = true,
-        nivelDePrecisionEstrategica = 10 , rol = "estrategaCuantico")
+    const entrenador1 = new Entrenador(ciclos = 1,estaEnSintonia = true,
+        nivelDePrecisionEstrategica = 10 , rol = estrategaCuantico)
     const equipoLuminico = new Luminico(nombre = "e", nivelDeEnergiaBase = 10, entrenador = entrenador1,
         nivelDeRadiacionCapturada = 5001 )
     const equipoLuminico2 = new Luminico(nombre = "e", nivelDeEnergiaBase = 10, entrenador = entrenador1,
         nivelDeRadiacionCapturada = 4000 )
-    test "checkpoin 1"{
+    const sintetico = new Sinteticos (nombre = "sintetico", nivelDeEnergiaBase = 100, entrenador = entrenador1,
+    nivelDeRadiacionCapturada = 1000 ,modulosActivos = 6, estanCertificados = true )
+    const sintetico2 = new Sinteticos (nombre = "sintetico2", nivelDeEnergiaBase = 100, entrenador = entrenador1,
+    nivelDeRadiacionCapturada = 1000 ,modulosActivos = 4, estanCertificados = true )
+    const tecnologia1 = new TecnologiasEspeciales(nombre= "nucleos" ,valorEnergetico = 10, activa =true)
+    const tecnologia2 = new TecnologiasEspeciales(nombre= "interfaces" , valorEnergetico = 10, activa =true)
+    test "checkpoint 1"{
+        sintetico2.agregarTecnologias(tecnologia1)
+        sintetico2.agregarTecnologias(tecnologia2)
         assert.throwsException({entrenador1.asignarRol("x")})
         assert.equals(10, equipoLuminico.energiaTotal())
         assert.equals(11, equipoLuminico2.energiaTotal())
+        assert.equals(80, sintetico.energiaTotal())
+        assert.equals(120, sintetico2.energiaTotal())
     }
+
+    const estratega = new Entrenador(ciclos = 12 ,estaEnSintonia = true,
+        nivelDePrecisionEstrategica = 90 , rol = estrategaCuantico)
+    const arquitecto = new Entrenador(ciclos = 11 ,estaEnSintonia = false,
+        nivelDePrecisionEstrategica = 90 , rol = arquitectoDeEnergia)
+    const guia = new Entrenador(ciclos = 15 ,estaEnSintonia = true,
+        nivelDePrecisionEstrategica = 90 , rol = guiaMental)        
+    test "checkpoint 2"{
+        assert.that(estratega.esDeEliteGalactica())
+        assert.notThat(arquitecto.esDeEliteGalactica())
+        assert.that(guia.esDeEliteGalactica())
+    }
+
+    const luminico = new Luminico(nombre = "luminico", nivelDeEnergiaBase = 10, entrenador = estratega,
+        nivelDeRadiacionCapturada = 5001 )
+    const luminico2 = new Luminico(nombre = "luminico2", nivelDeEnergiaBase = 10, entrenador = estratega,
+        nivelDeRadiacionCapturada = 4000 )
+     const tecnologia3 = new TecnologiasEspeciales(nombre= "interfaces" , valorEnergetico=10, activa =false)
+    test "checkpoint 3"{
+        luminico.agregarTecnologias(tecnologia1)
+        luminico.agregarCristal("1")
+        luminico.agregarCristal("2")
+        luminico.agregarCristal("3")
+        assert.that(luminico.esDePrestigioUniversal())
+        assert.that(sintetico2.esDePrestigioUniversal())
+        luminico2.agregarTecnologias(tecnologia3)
+        assert.notThat(luminico2.esDePrestigioUniversal())
+        sintetico.agregarTecnologias(tecnologia3)
+        assert.notThat(sintetico.esDePrestigioUniversal())
+    }
+
+    const eterico = new Etericos(nombre = "eterico", nivelDeEnergiaBase = 100, entrenador = entrenador1,
+    fluctuacion = 80, portalesEnergeticosAbiertos = 3)
+    const eterico2 = new Etericos(nombre = "eterico2", nivelDeEnergiaBase = 100, entrenador = entrenador1,
+    fluctuacion = 10, portalesEnergeticosAbiertos = 4)
+    test "checkpoint 4"{
+        eterico.agregarTecnologias(tecnologia1)
+        eterico.agregarTecnologias(tecnologia2)
+        assert.that(eterico.esDePrestigioUniversal())
+        assert.equals(138, eterico.energiaTotal())
+        assert.equals(100, eterico2.energiaTotal())
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
